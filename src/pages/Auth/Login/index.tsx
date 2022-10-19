@@ -3,12 +3,12 @@ import * as themes from "util/theme";
 import { useContext } from "react";
 import { AuthContext } from "AuthContext";
 import { useForm } from "react-hook-form";
-import "./styles.css";
 import { Link, useNavigate } from "react-router-dom";
 import { requestBackendLogin } from "util/requests";
 import { saveAuthData } from "util/storage";
 import { getTokenData } from "util/auth";
 import { toast } from "react-toastify";
+import "./styles.css";
 
 const LoginCard = styled.div`
   background-color: ${themes.cardColor};
@@ -21,6 +21,16 @@ const LoginCard = styled.div`
   flex-direction: column;
   width: 300px;
   padding-bottom: 10px;
+
+  @media (min-width: 576px){
+    width: 450px;
+    height: 200px;
+  }
+
+  @media (min-width: 768px){
+    width: 550px;
+    height: 250px;
+  }
 `;
 
 const LoginBtn = styled.button.attrs(() => ({
@@ -62,14 +72,14 @@ const Login = () => {
         });
         navigate("/");
       })
-      .catch((err) => {
-        toast.error(err);
+      .catch(() => {
+        toast.error(localStorage.getItem("401") || localStorage.getItem("403"));
       });
   };
 
   return (
     <LoginCard>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="login-form">
         <div className="my-3">
           <input
             type="text"

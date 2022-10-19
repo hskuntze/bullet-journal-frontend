@@ -4,14 +4,14 @@ import Register from "./Register";
 import "./styles.css";
 
 const Auth = () => {
-    return(
-        <div>
-            <Routes>
-                <Route path="" element={<Login />} />
-                <Route path="register" element={<Register />} />
-            </Routes>
-        </div>
-    );
-}
+  return (
+    <div className="d-flex justify-content-center">
+      <Routes>
+        <Route path="" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Routes>
+    </div>
+  );
+};
 
 export default Auth;
