@@ -1,0 +1,16 @@
+.subnav-link {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .subnav-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .subnav-link {
+    display: unset;
+    font-size: 14px;
+    margin-left: 6px;
+  }
+}
