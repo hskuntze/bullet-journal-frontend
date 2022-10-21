@@ -4,12 +4,10 @@ import { TodoType } from "types/TodoType";
 import { requestBackend } from "util/requests";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Howl} from "howler";
+import CheckSound from "assets/audios/todo-done.mp3";
 import * as themes from "util/theme";
 import "./styles.css";
-
-interface AnimateProps {
-  animate: boolean;
-}
 
 const enter = keyframes`
     0% {
@@ -62,11 +60,24 @@ type Props = {
   item: TodoType;
 };
 
+interface AnimateProps {
+  animate: boolean;
+}
+
 const Todo = ({ item }: Props) => {
   const [toggle, setToggle] = useState(false);
 
+  const player = () => {
+    const sound = new Howl({
+      src: [CheckSound],
+      volume: 0.25,
+    });
+    sound.play();
+  };
+
   const handleCheck = (item: TodoType) => {
     item.done = item.done ? false : true;
+    player();
 
     const params: AxiosRequestConfig = {
       method: "DELETE",
