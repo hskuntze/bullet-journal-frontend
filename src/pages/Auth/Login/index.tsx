@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import * as themes from "util/theme";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "AuthContext";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { saveAuthData } from "util/storage";
 import { getTokenData } from "util/auth";
 import { toast } from "react-toastify";
 import "./styles.css";
+import CardLoader from "components/CardLoader";
 
 const LoginCard = styled.div`
   background-color: ${themes.cardColor};
@@ -22,12 +23,12 @@ const LoginCard = styled.div`
   width: 300px;
   padding-bottom: 10px;
 
-  @media (min-width: 576px){
+  @media (min-width: 576px) {
     width: 450px;
     height: 200px;
   }
 
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     width: 550px;
     height: 250px;
   }
@@ -53,6 +54,7 @@ type FormData = {
 
 const Login = () => {
   const { setAuthContextData } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -63,6 +65,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (formData: FormData) => {
+    setIsLoading(true);
     requestBackendLogin(formData)
       .then((res) => {
         saveAuthData(res.data);
@@ -74,46 +77,59 @@ const Login = () => {
       })
       .catch(() => {
         toast.error(localStorage.getItem("401") || localStorage.getItem("403"));
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
-    <LoginCard>
-      <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-        <div className="my-3">
-          <input
-            type="text"
-            className={`form-control ${errors.username ? "is-invalid" : ""}`}
-            placeholder="Username"
-            {...register("username", {
-              required: "Obrigatório",
-            })}
-          />
-          <div className="invalid-feedback d-block">
-            {errors.username?.message}
-          </div>
-        </div>
-        <div className="my-3">
-          <input
-            type="password"
-            className={`form-control ${errors.password ? "is-invalid" : ""}`}
-            placeholder="Password"
-            {...register("password", {
-              required: "Obrigatório",
-            })}
-          />
-          <div className="invalid-feedback d-block">
-            {errors.password?.message}
-          </div>
-        </div>
-        <div className="d-flex flex-row-reverse justify-content-around">
-          <LoginBtn>Login</LoginBtn>
-          <Link to="/auth/register">
-            <RegisterBtn>Registrar</RegisterBtn>
-          </Link>
-        </div>
-      </form>
-    </LoginCard>
+    <>
+      {isLoading ? (
+        <CardLoader />
+      ) : (
+        <LoginCard>
+          <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+            <div className="my-3">
+              <input
+                type="text"
+                className={`form-control ${
+                  errors.username ? "is-invalid" : ""
+                }`}
+                placeholder="Username"
+                {...register("username", {
+                  required: "Obrigatório",
+                })}
+              />
+              <div className="invalid-feedback d-block">
+                {errors.username?.message}
+              </div>
+            </div>
+            <div className="my-3">
+              <input
+                type="password"
+                className={`form-control ${
+                  errors.password ? "is-invalid" : ""
+                }`}
+                placeholder="Password"
+                {...register("password", {
+                  required: "Obrigatório",
+                })}
+              />
+              <div className="invalid-feedback d-block">
+                {errors.password?.message}
+              </div>
+            </div>
+            <div className="d-flex flex-row-reverse justify-content-around">
+              <LoginBtn>Login</LoginBtn>
+              <Link to="/auth/register">
+                <RegisterBtn>Registrar</RegisterBtn>
+              </Link>
+            </div>
+          </form>
+        </LoginCard>
+      )}
+    </>
   );
 };
 

@@ -11,7 +11,6 @@ const ProfileCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: justify;
   padding: 15px;
   margin: 15px 0px;
   background-color: ${theme.cardColor};
@@ -50,13 +49,18 @@ const Profile = () => {
   return (
     <div className="d-flex justify-content-center">
       <ProfileCard>
+        <div className="mx-auto">
+          <i className="bi bi-person-badge" style={{ fontSize: "40px"}} />
+        </div>
         <span>
           Nome de usuário:&nbsp;
           <span className="fw-light">{profile?.user_name}</span>
         </span>
         <span>
           Autorização:&nbsp;
-          <span className="fw-light">{handleAuthType(profile?.authorities)}</span>
+          <span className="fw-light">
+            {handleAuthType(profile?.authorities)}
+          </span>
         </span>
       </ProfileCard>
     </div>

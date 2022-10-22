@@ -11,10 +11,9 @@ const HomeContent = styled.main`
   align-items: center;
 `;
 
-const spin = keyframes`
+const grow = keyframes`
   100% {
     transform: scale(2,2);
-    box-shadow: 0px 0px 6px 2px rgb(67,63,251);
   }
 `;
 
@@ -27,10 +26,9 @@ const SquareToCircle = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 11.5px;
-  color: #e6e6e6;
-  background: rgb(67,63,251);
-  background: linear-gradient(45deg, rgba(67,63,251,1) 0%, rgba(252,70,70,1) 100%);
-  animation: ${spin} 1.5s ease-in-out forwards;
+  color: ${themeConf.textColor};
+  background: ${themeConf.homeAnimationBackground};
+  animation: ${grow} 1.5s ease-in-out forwards;
 `;
 
 const Home = () => {

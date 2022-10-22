@@ -43,7 +43,6 @@ const selectStyles = {
   option: () => ({
     color: "black",
     margin: "10px",
-    borderBottom: "1px solid #ccc",
     padding: "5px",
   }),
 };
@@ -54,7 +53,7 @@ const Form = () => {
   const [selectOptions] = useState<PriorityType[]>([
     { priority: "high" },
     { priority: "medium" },
-    { priority: "low" },
+    { priority: "low" }
   ]);
 
   const {

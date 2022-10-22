@@ -8,6 +8,9 @@ import Todo from "components/Todo";
 import styled from "styled-components";
 import * as theme from "util/theme";
 import { Link } from "react-router-dom";
+import { TodoFilterContent } from "types/TodoFilterContent";
+import TodoFilterBar from "components/TodoFilterBar";
+import Pagination from "components/Pagination";
 
 const TodoButton = styled.div`
   width: 90px;
@@ -19,9 +22,19 @@ const TodoButton = styled.div`
   align-items: center;
 `;
 
+type ControlComponentsData = {
+  activePage: number;
+  filterData: TodoFilterContent;
+};
+
 const List = () => {
   const [todos, setTodos] = useState<SpringPage<TodoType>>();
   const { authContextData } = useContext(AuthContext);
+  const [controlComponentsData, setControlComponentsData] =
+    useState<ControlComponentsData>({
+      activePage: 0,
+      filterData: { title: "", priority: "" },
+    });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -32,24 +45,50 @@ const List = () => {
         withCredentials: true,
         method: "GET",
         signal: controller.signal,
+        params: {
+          size: 10,
+          page: controlComponentsData.activePage,
+          title: controlComponentsData.filterData.title,
+          priority: controlComponentsData.filterData.priority,
+        },
       };
 
       setTodos((await requestBackend(params)).data);
     })();
 
     return () => controller.abort();
-  }, [authContextData.authenticated]);
+  }, [authContextData.authenticated, controlComponentsData]);
+
+  const handlePageChange = (pageNumber: number) => {
+    setControlComponentsData({
+      activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
+    });
+  };
+
+  const handleSubmitFilter = (data: TodoFilterContent) => {
+    setControlComponentsData({ activePage: 0, filterData: data });
+  };
 
   return (
     <div className="d-flex flex-column align-items-center mt-2">
       <Link to="/to-dos/create">
         <TodoButton>Criar</TodoButton>
       </Link>
+      <div style={{margin: '10px 0'}}>
+        <TodoFilterBar onSubmitFilter={handleSubmitFilter} />
+      </div>
       <div className="d-flex flex-column align-items-center">
         {authContextData.authenticated &&
           todos &&
           todos?.content.map((todo) => <Todo key={todo.id} item={todo} />)}
       </div>
+      <Pagination
+        forcePage={todos?.number}
+        pageCount={todos ? todos.totalPages : 0}
+        range={2}
+        onChange={handlePageChange}
+      />
     </div>
   );
 };
