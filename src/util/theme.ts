@@ -39,3 +39,8 @@ export const buttonBackgroundColorHover = theme('mode', {
   light: '#bbb',
   dark: '#444'
 });
+
+export const homeAnimationBackground = theme('mode', {
+  light: 'linear-gradient(90deg, rgba(245,245,245,1) 0%, rgba(212,215,210,1) 50%, rgba(199,197,188,1) 100%)',
+  dark: 'linear-gradient(90deg, rgba(16,18,17,1) 0%, rgba(38,44,38,1) 50%, rgba(56,56,63,1) 100%)'
+});

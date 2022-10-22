@@ -1,0 +1,29 @@
+.about-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-info h5 {
+  font-size: 1.1em;
+  margin: 5px 0 10px 0;
+  text-align: center;
+}
+
+.about-info p {
+  text-indent: 10px;
+  font-size: 1em;
+  text-align: justify;
+  margin: 0 15px;
+}
+
+@media (min-width: 576px) {
+  .about-info h5 {
+    font-size: 1.4em;
+  }
+
+  .about-info p {
+    font-size: 1.1em;
+  }
+}

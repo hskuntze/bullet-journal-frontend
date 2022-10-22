@@ -1,1 +1,1 @@
-export type PriorityType = {priority: "high" | "medium" | "low"};
+export type PriorityType = {priority: "high" | "medium" | "low" | ""};

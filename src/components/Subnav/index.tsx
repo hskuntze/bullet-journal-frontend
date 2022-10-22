@@ -82,6 +82,12 @@ const Subnav = () => {
         ) : (
           <></>
         )}
+        <div className="subnav-item">
+          <Link to="/about">
+            <i className="bi bi-info-square" />
+            <span className="subnav-link">Sobre</span>
+          </Link>
+        </div>
       </div>
     </nav>
   );

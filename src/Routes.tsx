@@ -13,6 +13,7 @@ import Todos from "pages/Todos";
 import { ManageThemeContext } from "ThemeManager";
 import ComponentTitle from "components/ComponentTitle";
 import Profile from "pages/Profile";
+import About from "pages/About";
 
 const Wrapper = styled.div`
   background-color: ${themeConf.backgroundColor};
@@ -36,6 +37,7 @@ const Routes = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/cards/*" element={<Cards />} />
             <Route path="/to-dos/*" element={<Todos />} />
+            <Route path="/about" element={<About />} />
           </Switch>
         </Wrapper>
       </ThemeProvider>

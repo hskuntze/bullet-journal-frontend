@@ -59,7 +59,7 @@ const Form = () => {
 
     requestBackend(params)
       .then(() => {
-        toast.success("Criado com sucesso.");
+        toast.success("Sucesso.");
         navigate.replace("/cards");
       })
       .catch((err) => {
@@ -109,7 +109,7 @@ const Form = () => {
         <div className="mt-2 mb-3">
           <input
             type="text"
-            value={"Dia " + dataAtual()}
+            placeholder={"Dia " + dataAtual()}
             className={`form-control ${errors.title ? "is-invalid" : ""}`}
             {...register("title", {
               required: "Campo obrigatório",
