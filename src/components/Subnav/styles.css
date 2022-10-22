@@ -1,3 +1,12 @@
+.sub-nav {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+  align-items: center;
+  flex: 1;
+  margin: 5px 10px;
+}
+
 .subnav-link {
   display: none;
 }

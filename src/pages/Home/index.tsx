@@ -29,13 +29,19 @@ const SquareToCircle = styled.div`
   color: ${themeConf.textColor};
   background: ${themeConf.homeAnimationBackground};
   animation: ${grow} 1.5s ease-in-out forwards;
+  transition: width 0.3s, height 0.3s;
+
+  &:hover {
+    width: 105px;
+    height: 105px;
+  }
 `;
 
 const Home = () => {
   return (
     <HomeContent>
       <SquareToCircle>
-        Bem vindo! <Emoji symbol="😀"/>
+        Bem vindo! <Emoji symbol="😀" />
       </SquareToCircle>
     </HomeContent>
   );

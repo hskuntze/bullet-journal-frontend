@@ -8,8 +8,8 @@ import { requestBackendLogin } from "util/requests";
 import { saveAuthData } from "util/storage";
 import { getTokenData } from "util/auth";
 import { toast } from "react-toastify";
+import CardLoader from "./CardLoader";
 import "./styles.css";
-import CardLoader from "components/CardLoader";
 
 const LoginCard = styled.div`
   background-color: ${themes.cardColor};

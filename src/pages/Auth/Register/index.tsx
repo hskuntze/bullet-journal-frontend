@@ -73,6 +73,11 @@ const Register = () => {
       });
   };
 
+  const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate.replace("/auth");
+  }
+
   return (
     <Card>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -126,8 +131,11 @@ const Register = () => {
             <BtnLoader />
           </div>
         ) : (
-          <div className="d-flex flex-row-reverse">
+          <div className="d-flex flex-row-reverse justify-content-around">
             <Btn>Cadastrar</Btn>
+            <button className="btn btn-danger" onClick={handleCancel}>
+              Cancelar
+            </button>
           </div>
         )}
       </form>
