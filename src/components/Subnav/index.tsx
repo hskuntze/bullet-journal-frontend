@@ -78,16 +78,24 @@ const Subnav = () => {
                 </Link>
               </div>
             </button>
+            <button type="button">
+              <div className="subnav-item">
+                <Link to="/streaks">
+                  <i className="bi bi-calendar3" />
+                  <span className="subnav-link">Streaks</span>
+                </Link>
+              </div>
+            </button>
           </>
         ) : (
           <></>
         )}
-        <div className="subnav-item">
+        {/* <div className="subnav-item">
           <Link to="/about">
             <i className="bi bi-info-square" />
             <span className="subnav-link">Sobre</span>
           </Link>
-        </div>
+        </div> */}
       </div>
     </nav>
   );

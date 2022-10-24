@@ -86,7 +86,9 @@ const Login = () => {
   return (
     <>
       {isLoading ? (
-        <CardLoader />
+        <div className="loader-div">
+          <CardLoader />
+        </div>
       ) : (
         <LoginCard>
           <form onSubmit={handleSubmit(onSubmit)} className="login-form">

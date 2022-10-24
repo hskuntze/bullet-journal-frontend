@@ -6,16 +6,3 @@
   display: unset;
 }
 
-.up-title {
-  width: 100%;
-}
-
-.up-title-button {
-  font-size: 12px;
-  height: 20px;
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 4px;
-}

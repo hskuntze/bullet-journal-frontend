@@ -11,6 +11,7 @@ import * as theme from "util/theme";
 import CardFilterBar from "components/CardFilterBar";
 import { CardFilterContent } from "types/CardFilterContent";
 import Pagination from "components/Pagination";
+import CardContentLoader from "../CardContentLoader";
 
 const CardButton = styled.div`
   width: 90px;
@@ -30,6 +31,7 @@ type ControlComponentsData = {
 const List = () => {
   const [cards, setCards] = useState<SpringPage<CardType>>();
   const { authContextData } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const [controlComponentsData, setControlComponentsData] =
     useState<ControlComponentsData>({
       activePage: 0,
@@ -53,6 +55,7 @@ const List = () => {
       };
 
       setCards((await requestBackend(params)).data);
+      setLoading(false);
     })();
 
     return () => controller.abort();
@@ -70,25 +73,41 @@ const List = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center mt-2">
-      <Link to="/cards/create">
-        <CardButton>Criar</CardButton>
-      </Link>
-      <div style={{margin: '10px 0'}}>
-        <CardFilterBar onSubmitFilter={handleSubmitFilter} />
-      </div>
-      <div className="d-flex flex-column align-items-center">
-        {authContextData.authenticated &&
-          cards &&
-          cards?.content.map((card) => <Card key={card.id} cd={card} />)}
-      </div>
-      <Pagination
-        forcePage={cards?.number}
-        pageCount={cards ? cards.totalPages : 0}
-        range={2}
-        onChange={handlePageChange}
-      />
-    </div>
+    <>
+      {loading ? (
+        <div className="d-flex flex-column justify-content-center align-items-center mt-2">
+          <Link to="/cards/create">
+            <CardButton>Criar</CardButton>
+          </Link>
+          <div style={{ margin: "10px 0" }}>
+            <CardFilterBar onSubmitFilter={handleSubmitFilter} />
+          </div>
+          <div className="mt-2">
+            <CardContentLoader />
+          </div>
+        </div>
+      ) : (
+        <div className="d-flex flex-column align-items-center mt-2">
+          <Link to="/cards/create">
+            <CardButton>Criar</CardButton>
+          </Link>
+          <div style={{ margin: "10px 0" }}>
+            <CardFilterBar onSubmitFilter={handleSubmitFilter} />
+          </div>
+          <div className="d-flex flex-column align-items-center">
+            {authContextData.authenticated &&
+              cards &&
+              cards?.content.map((card) => <Card key={card.id} cd={card} />)}
+          </div>
+          <Pagination
+            forcePage={cards?.number}
+            pageCount={cards ? cards.totalPages : 0}
+            range={2}
+            onChange={handlePageChange}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

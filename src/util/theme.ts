@@ -35,9 +35,14 @@ export const buttonBackgroundColor = theme('mode', {
   dark: '#545E59'
 });
 
-export const buttonBackgroundColorHover = theme('mode', {
-  light: '#bbb',
-  dark: '#444'
+export const progressBarColor = theme('mode', {
+  light: '#610053',
+  dark: '#43AD1F'
+});
+
+export const progressBarBackgroundColor = theme('mode', {
+  light: '#d8bdc9',
+  dark: '#d8cd90'
 });
 
 export const homeAnimationBackground = theme('mode', {
