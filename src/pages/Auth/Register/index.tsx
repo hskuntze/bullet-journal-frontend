@@ -58,15 +58,13 @@ const Register = () => {
       },
     };
     setIsLoading(true);
-    console.log(isLoading);
     requestBackend(params)
       .then(() => {
         toast.success("Cadastro criado com sucesso.");
         navigate.replace("/auth");
       })
-      .catch(() => {
-        toast.error(localStorage.getItem("409"));
-        localStorage.removeItem("409");
+      .catch((err) => {
+        toast.error(err.response.data.message);
       })
       .finally(() => {
         setIsLoading(false);
