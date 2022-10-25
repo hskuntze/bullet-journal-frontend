@@ -4,13 +4,15 @@ import { toast } from "react-toastify";
 import { StreakType } from "types/StreakType";
 import { SpringPage } from "types/vendor/spring";
 import { requestBackend } from "util/requests";
+import { Link } from "react-router-dom";
+import { StreakFilterContent } from "types/StreakFilterContent";
+import StreakContentLoader from "../StreakContentLoader";
+import StreakFilterBar from "components/StreakFilterBar";
 import ProgressBar from "components/ProgressBar";
 import BtnLoader from "../BtnLoader";
 import styled from "styled-components";
 import * as theme from "util/theme";
 import "./styles.css";
-import { Link } from "react-router-dom";
-import StreakContentLoader from "../StreakContentLoader";
 
 const StreakButton = styled.button.attrs(() => ({
   type: "button",
@@ -36,10 +38,20 @@ const CreateStreakButton = styled.div`
   align-items: center;
 `;
 
+type ControlComponentsData = {
+  activePage: number;
+  filterData: StreakFilterContent;
+};
+
 const List = () => {
   const [streaks, setStreaks] = useState<SpringPage<StreakType>>();
   const [btnLoading, setBtnLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [controlComponentsData, setControlComponentsData] =
+    useState<ControlComponentsData>({
+      activePage: 0,
+      filterData: { title: "" },
+    });
 
   useEffect(() => {
     (async () => {
@@ -49,12 +61,17 @@ const List = () => {
         withCredentials: true,
         method: "GET",
         signal: controller.signal,
+        params: {
+          size: 10,
+          page: controlComponentsData.activePage,
+          title: controlComponentsData.filterData.title,
+        }
       };
 
       setStreaks((await requestBackend(params)).data);
       setLoading(false);
     })();
-  }, []);
+  }, [controlComponentsData]);
 
   const handleProgress = (streak: StreakType) => {
     streak.count++;
@@ -94,6 +111,10 @@ const List = () => {
       });
   };
 
+  const handleSubmitFilter = (data: StreakFilterContent) => {
+    setControlComponentsData({ activePage: 0, filterData: data });
+  };
+
   return (
     <>
       {loading ? (
@@ -101,6 +122,9 @@ const List = () => {
           <Link to="/streaks/create">
             <CreateStreakButton>Criar</CreateStreakButton>
           </Link>
+          <div style={{margin: "10px 0"}}>
+            <StreakFilterBar onSubmitFilter={handleSubmitFilter} />
+          </div>
           <div className="mt-2">
             <StreakContentLoader />
           </div>
@@ -110,9 +134,12 @@ const List = () => {
           <Link to="/streaks/create">
             <CreateStreakButton>Criar</CreateStreakButton>
           </Link>
+          <div style={{margin: "10px 0"}}>
+            <StreakFilterBar onSubmitFilter={handleSubmitFilter} />
+          </div>
           {streaks &&
             streaks.content.map((streak) => (
-              <div className="streak-item">
+              <div className="streak-item" key={"div"+streak.id}>
                 <ProgressBar streak={streak} key={streak.id} />
                 {btnLoading ? (
                   <div style={{ margin: "5px 0" }}>

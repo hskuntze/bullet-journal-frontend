@@ -75,8 +75,12 @@ const Login = () => {
         });
         navigate("/");
       })
-      .catch(() => {
-        toast.error(localStorage.getItem("401") || localStorage.getItem("403"));
+      .catch((err) => {
+        if(err.response.data.error_description === "Bad credentials"){
+          toast.error("Credenciais inválidas! Verifique o nome de usuário e/ou senha.");
+        } else {
+          toast.error(err.response.data.error_description);
+        }
       })
       .finally(() => {
         setIsLoading(false);
