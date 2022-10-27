@@ -25,13 +25,8 @@ const About = () => {
           <p>
             O Bullet Journal é uma iniciativa pessoal que nasce com a
             perspectiva da importância de um controle da rotina, bem como um
-            espaço pessoal. A aplicação inicialmente conta com apenas duas
-            funcionalidades: tarefas (todos) & cartões (cards), onde o primeiro
-            tem o intuito de ajudar o usuário com tarefas corriqueiras, e o
-            segundo com o propósito de ser um espaço para lembretes, para
-            anotações, entradas diárias etc.
+            espaço pessoal.
           </p>
-          <small className="fw-light fst-italic mt-3">v1.2.0</small>
         </div>
       </AboutCard>
     </div>
