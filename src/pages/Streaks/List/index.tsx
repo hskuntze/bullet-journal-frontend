@@ -100,6 +100,11 @@ const List = () => {
             withCredentials: true,
             method: "GET",
             signal: controller.signal,
+            params: {
+              size: 3,
+              page: controlComponentsData.activePage,
+              title: controlComponentsData.filterData.title,
+            },
           };
           setStreaks((await requestBackend(params)).data);
         })();
