@@ -25,6 +25,11 @@ export const navbarBoxshadowColor = theme('mode', {
   dark: '0px 5px 10px #262626'
 });
 
+export const footerBoxshadowColor = theme('mode', {
+  light: '0px -5px 10px #b5b5b5',
+  dark: '0px -5px 10px #262626'
+});
+
 export const cardColor = theme('mode', {
   light: '#b5b5b5',
   dark: '#2D3330'
@@ -36,13 +41,13 @@ export const buttonBackgroundColor = theme('mode', {
 });
 
 export const progressBarColor = theme('mode', {
-  light: '#610053',
-  dark: '#43AD1F'
+  light: '#c1cc1c',
+  dark: '#999988'
 });
 
 export const progressBarBackgroundColor = theme('mode', {
-  light: '#d8bdc9',
-  dark: '#d8cd90'
+  light: '#e8e8cc',
+  dark: '#c8c8cc'
 });
 
 export const homeAnimationBackground = theme('mode', {

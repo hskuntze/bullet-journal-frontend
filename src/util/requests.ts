@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
-import qs from "qs";
-//import config from "../config";
 import { getAuthData } from "./storage";
+//import config from "../config";
+import qs from "qs";
 
 export const BASE_URL =
   process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8080";

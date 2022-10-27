@@ -1,14 +1,15 @@
 import { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { StreakType } from "types/StreakType";
 import { SpringPage } from "types/vendor/spring";
 import { requestBackend } from "util/requests";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { StreakFilterContent } from "types/StreakFilterContent";
 import StreakContentLoader from "../StreakContentLoader";
 import StreakFilterBar from "components/StreakFilterBar";
 import ProgressBar from "components/ProgressBar";
+import Pagination from "components/Pagination";
 import BtnLoader from "../BtnLoader";
 import styled from "styled-components";
 import * as theme from "util/theme";
@@ -62,10 +63,10 @@ const List = () => {
         method: "GET",
         signal: controller.signal,
         params: {
-          size: 10,
+          size: 3,
           page: controlComponentsData.activePage,
           title: controlComponentsData.filterData.title,
-        }
+        },
       };
 
       setStreaks((await requestBackend(params)).data);
@@ -115,6 +116,13 @@ const List = () => {
     setControlComponentsData({ activePage: 0, filterData: data });
   };
 
+  const handlePageChange = (pageNumber: number) => {
+    setControlComponentsData({
+      activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
+    });
+  };
+
   return (
     <>
       {loading ? (
@@ -122,7 +130,7 @@ const List = () => {
           <Link to="/streaks/create">
             <CreateStreakButton>Criar</CreateStreakButton>
           </Link>
-          <div style={{margin: "10px 0"}}>
+          <div style={{ margin: "10px 0" }}>
             <StreakFilterBar onSubmitFilter={handleSubmitFilter} />
           </div>
           <div className="mt-2">
@@ -130,16 +138,16 @@ const List = () => {
           </div>
         </div>
       ) : (
-        <div className="d-flex flex-column align-items-center my-3">
+        <div className="d-flex flex-column align-items-center mt-2">
           <Link to="/streaks/create">
             <CreateStreakButton>Criar</CreateStreakButton>
           </Link>
-          <div style={{margin: "10px 0"}}>
+          <div style={{ margin: "10px 0" }}>
             <StreakFilterBar onSubmitFilter={handleSubmitFilter} />
           </div>
           {streaks &&
             streaks.content.map((streak) => (
-              <div className="streak-item" key={"div"+streak.id}>
+              <div className="streak-item" key={"div" + streak.id}>
                 <ProgressBar streak={streak} key={streak.id} />
                 {btnLoading ? (
                   <div style={{ margin: "5px 0" }}>
@@ -156,6 +164,12 @@ const List = () => {
                 )}
               </div>
             ))}
+          <Pagination
+            forcePage={streaks?.number}
+            pageCount={streaks ? streaks.totalPages : 0}
+            range={2}
+            onChange={handlePageChange}
+          />
         </div>
       )}
     </>

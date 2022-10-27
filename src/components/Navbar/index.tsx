@@ -5,7 +5,7 @@ import styled from "styled-components";
 import "./styles.css";
 import "bootstrap/js/src/collapse.js";
 
-const NavWrapper = styled.div`
+const NavbarComponent = styled.div`
   background-color: ${themeConf.navbarBackgroundColor};
   color: ${themeConf.textColor};
   box-shadow: ${themeConf.navbarBoxshadowColor};
@@ -15,7 +15,7 @@ const Navbar = () => {
   const theme = useTheme();
 
   return (
-    <NavWrapper>
+    <NavbarComponent>
       <nav className="navbar navbar-expand-md sticky-top custom-nav">
         <div className="container-fluid me-auto">
           <NavLink to="/">
@@ -26,7 +26,7 @@ const Navbar = () => {
           </button>
         </div>
       </nav>
-    </NavWrapper>
+    </NavbarComponent>
   );
 };
 
