@@ -4,14 +4,14 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "AuthContext";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
-import Todo from "components/Todo";
-import styled from "styled-components";
-import * as theme from "util/theme";
 import { Link } from "react-router-dom";
 import { TodoFilterContent } from "types/TodoFilterContent";
 import TodoFilterBar from "components/TodoFilterBar";
 import Pagination from "components/Pagination";
-import TodoContentLoader from "../TodoContentLoader";
+import ContentLoader from "components/ContentLoader";
+import Todo from "components/Todo";
+import styled from "styled-components";
+import * as theme from "util/theme";
 
 const TodoButton = styled.div`
   width: 90px;
@@ -84,7 +84,7 @@ const List = () => {
             <TodoFilterBar onSubmitFilter={handleSubmitFilter} />
           </div>
           <div className="mt-2">
-            <TodoContentLoader />
+            <ContentLoader />
           </div>
         </div>
       ) : (

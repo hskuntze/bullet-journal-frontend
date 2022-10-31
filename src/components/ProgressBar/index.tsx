@@ -12,7 +12,7 @@ type Props = {
 
 const ProgressCard = styled.div`
   width: 280px;
-  height: 120px;
+  min-height: 120px;
   background-color: ${theme.cardColor};
   border-radius: 4px;
 
@@ -54,6 +54,11 @@ const ProgressCard = styled.div`
     justify-content: center;
     align-items: center;
   }
+
+  & .date-span {
+    font-weight: 300;
+    font-size: 13px;
+  }
 `;
 
 const ProgressBar = ({ streak }: Props) => {
@@ -80,18 +85,32 @@ const ProgressBar = ({ streak }: Props) => {
     }
   };
 
+  const formatDate = (streak: StreakType): string => {
+    if (streak.createdAt !== null) {
+      let aux = streak.createdAt;
+      let ix = aux.indexOf("T");
+      let date = aux.substring(0, ix);
+      let fields = date.split("-");
+      return fields[2]+"/"+fields[1]+"/"+fields[0];
+    }
+    return "";
+  };
+
   return (
     <ProgressCard>
       <div className="d-flex flex-row-reverse align-items-center justify-content-between up-title">
         <button onClick={handleDeletion} className="up-title-button">
           <i className="bi bi-trash3" style={{ color: "indianred" }} />
         </button>
+        <label htmlFor={"progress-streak-" + streak.id}>
+          {streak.createdAt && <span className="date-span">{formatDate(streak)}</span>}
+        </label>
         <Link to={`/streaks/${streak.id}`} className="up-title-button">
           <i className="bi bi-pencil-fill" style={{ color: "gold" }} />
         </Link>
       </div>
       <div className="streak-div">
-        <label htmlFor={"progress-streak-" + streak.id} className="mb-2">
+        <label htmlFor={"progress-streak-" + streak.id} className="mb-1">
           {streak.title}
         </label>
         <progress
@@ -102,7 +121,7 @@ const ProgressBar = ({ streak }: Props) => {
         <div className="mt-2 d-flex justify-content-center">
           <span>{((streak.count / streak.total) * 100).toFixed(2)}%</span>
           <span className="ms-1">
-            ({streak.count}/{streak.total})
+            ({streak.count}/{streak.total} {streak.label}) 
           </span>
         </div>
       </div>

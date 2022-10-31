@@ -1,7 +1,8 @@
 import { AxiosRequestConfig } from "axios";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import Select from "react-select";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { StreakType } from "types/StreakType";
@@ -11,6 +12,11 @@ import * as theme from "util/theme";
 
 type UrlParams = {
   streakId: string;
+};
+
+export type LabelSelect = {
+  label: string;
+  value: string;
 };
 
 const FormCard = styled.div`
@@ -37,14 +43,28 @@ const FormCard = styled.div`
   }
 `;
 
+const selectStyles = {
+  option: () => ({
+    color: "black",
+    margin: "10px",
+    padding: "5px",
+  }),
+};
+
 const Form = () => {
   const { streakId } = useParams<UrlParams>();
   const editing = streakId !== "create";
+  const [selectLabels] = useState<LabelSelect[]>([
+    { label: "Dias", value: "dias" },
+    { label: "Semanas", value: "semanas" },
+    { label: "Meses", value: "meses" },
+  ]);
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    control,
   } = useForm<StreakType>();
 
   const onSubmit = (streak: StreakType) => {
@@ -53,6 +73,9 @@ const Form = () => {
       streak.count = 0;
       streak.disabled = false;
       streak.doneToday = false;
+      streak.label = streak.labelAux.value;
+    } else {
+      streak.label = streak.labelAux.value;
     }
 
     const params: AxiosRequestConfig = {
@@ -92,6 +115,9 @@ const Form = () => {
         setValue("disabled", data.disabled);
         setValue("doneToday", data.doneToday);
         setValue("count", data.count);
+        let label = data.label.substring(0, 1).toUpperCase() + data.label.slice(1, data.label.length);
+        setValue("labelAux", {label, value: data.label});
+        setValue("label", data.label);
       })();
     }
   }, [editing, setValue, streakId]);
@@ -132,6 +158,24 @@ const Form = () => {
           <div className="invalid-feedback d-block">
             {errors.total?.message}
           </div>
+        </div>
+        <div className="mt-2 mb-3">
+          <Controller
+            name="labelAux"
+            rules={{ required: true }}
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder="Rótulo"
+                options={selectLabels}
+                classNamePrefix="streak-select"
+                getOptionLabel={(val: LabelSelect) => val.label}
+                getOptionValue={(val: LabelSelect) => val.value}
+                styles={selectStyles}
+              />
+            )}
+          />
         </div>
         <div className="mt-2 d-flex justify-content-around">
           <button

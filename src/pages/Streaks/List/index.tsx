@@ -6,8 +6,8 @@ import { requestBackend } from "util/requests";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { StreakFilterContent } from "types/StreakFilterContent";
-import StreakContentLoader from "../StreakContentLoader";
 import StreakFilterBar from "components/StreakFilterBar";
+import ContentLoader from "components/ContentLoader";
 import ProgressBar from "components/ProgressBar";
 import Pagination from "components/Pagination";
 import BtnLoader from "../BtnLoader";
@@ -139,7 +139,7 @@ const List = () => {
             <StreakFilterBar onSubmitFilter={handleSubmitFilter} />
           </div>
           <div className="mt-2">
-            <StreakContentLoader />
+            <ContentLoader />
           </div>
         </div>
       ) : (

@@ -11,7 +11,7 @@ import * as theme from "util/theme";
 import CardFilterBar from "components/CardFilterBar";
 import { CardFilterContent } from "types/CardFilterContent";
 import Pagination from "components/Pagination";
-import CardContentLoader from "../CardContentLoader";
+import ContentLoader from "components/ContentLoader";
 
 const CardButton = styled.div`
   width: 90px;
@@ -83,7 +83,7 @@ const List = () => {
             <CardFilterBar onSubmitFilter={handleSubmitFilter} />
           </div>
           <div className="mt-2">
-            <CardContentLoader />
+            <ContentLoader />
           </div>
         </div>
       ) : (

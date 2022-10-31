@@ -16,6 +16,7 @@ import Profile from "pages/Profile";
 import About from "pages/About";
 import Streaks from "pages/Streaks";
 import Footer from "components/Footer";
+import PrivateRoute from "PrivateRoute";
 
 const Wrapper = styled.div`
   background-color: ${themeConf.backgroundColor};
@@ -42,10 +43,46 @@ const Routes = () => {
             <Switch>
               <Route path="/" element={<Home />} />
               <Route path="/auth/*" element={<Auth />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/cards/*" element={<Cards />} />
-              <Route path="/to-dos/*" element={<Todos />} />
-              <Route path="/streaks/*" element={<Streaks />} />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute
+                    roles={["ROLE_VISITOR", "ROLE_USER", "ROLE_ADMIN"]}
+                  >
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/cards/*"
+                element={
+                  <PrivateRoute
+                    roles={["ROLE_VISITOR", "ROLE_USER", "ROLE_ADMIN"]}
+                  >
+                    <Cards />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/to-dos/*"
+                element={
+                  <PrivateRoute
+                    roles={["ROLE_VISITOR", "ROLE_USER", "ROLE_ADMIN"]}
+                  >
+                    <Todos />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/streaks/*"
+                element={
+                  <PrivateRoute
+                    roles={["ROLE_VISITOR", "ROLE_USER", "ROLE_ADMIN"]}
+                  >
+                    <Streaks />
+                  </PrivateRoute>
+                }
+              />
               <Route path="/about" element={<About />} />
             </Switch>
           </Content>
