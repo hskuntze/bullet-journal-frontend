@@ -5,4 +5,5 @@ export type CardType = {
     title: string;
     description: string;
     user: UserType;
+    createdAt: string;
 };

@@ -6,8 +6,9 @@ export type StreakType = {
   count: number;
   total: number;
   disabled: boolean;
-  doneToday: boolean;
+  totalPerLabel: number;
   createdAt: string;
   label: string;
   labelAux: LabelSelect;
+  last: string;
 };

@@ -4,3 +4,18 @@
   align-items: flex-end;
   margin: 10px 0;
 }
+
+.streak-under-div {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  width: 280px;
+}
+
+.last-update {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}

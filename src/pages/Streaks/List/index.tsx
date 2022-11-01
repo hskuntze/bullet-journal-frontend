@@ -1,3 +1,4 @@
+import { StreakFilterContent } from "types/StreakFilterContent";
 import { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 import { StreakType } from "types/StreakType";
@@ -5,7 +6,9 @@ import { SpringPage } from "types/vendor/spring";
 import { requestBackend } from "util/requests";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { StreakFilterContent } from "types/StreakFilterContent";
+import { Howl } from "howler";
+import SuccessSound from "assets/audios/success.mp3";
+import TadaSound from "assets/audios/tada.mp3";
 import StreakFilterBar from "components/StreakFilterBar";
 import ContentLoader from "components/ContentLoader";
 import ProgressBar from "components/ProgressBar";
@@ -54,6 +57,22 @@ const List = () => {
       filterData: { title: "" },
     });
 
+  const player = () => {
+    const sound = new Howl({
+      src: [SuccessSound],
+      volume: 0.6,
+    });
+    sound.play();
+  };
+
+  const player2 = () => {
+    const sound = new Howl({
+      src: [TadaSound],
+      volume: 0.45,
+    });
+    sound.play();
+  }
+
   useEffect(() => {
     (async () => {
       const controller = new AbortController();
@@ -75,12 +94,17 @@ const List = () => {
   }, [controlComponentsData]);
 
   const handleProgress = (streak: StreakType) => {
+    player();
     streak.count++;
-    streak.doneToday = true;
+    streak.last = new Date().toISOString();
     setBtnLoading(true);
-    (streak.count / streak.total) * 100 >= 100
+    (streak.count / streak.totalPerLabel) * 100 >= 100
       ? (streak.disabled = true)
       : (streak.disabled = false);
+
+    if((streak.count / streak.totalPerLabel) * 100 >= 100){
+      player2();
+    }
 
     const params: AxiosRequestConfig = {
       url: `/streaks/${streak.id}`,
@@ -128,6 +152,29 @@ const List = () => {
     });
   };
 
+  const formatDate = (streak: StreakType): string => {
+    if (streak.last !== null) {
+      let aux = streak.last;
+      let ix = aux.indexOf("T");
+      let date = aux.substring(0, ix);
+      let fields = date.split("-");
+      return fields[2] + "/" + fields[1] + "/" + fields[0];
+    }
+    return "null";
+  };
+
+  const formatHour = (streak: StreakType): string => {
+    if(streak.last != null) {
+      let aux = streak.last;
+      let ix = aux.indexOf("T");
+      let ix2 = aux.indexOf("Z");
+      let hour = aux.substring(ix+1, ix2);
+      let fields = hour.split(":");
+      return (Number(fields[0])-3)+":"+fields[1];
+    }
+    return "null";
+  };
+
   return (
     <>
       {loading ? (
@@ -154,19 +201,22 @@ const List = () => {
             streaks.content.map((streak) => (
               <div className="streak-item" key={"div" + streak.id}>
                 <ProgressBar streak={streak} key={streak.id} />
-                {btnLoading ? (
-                  <div style={{ margin: "5px 0" }}>
-                    <BtnLoader />
-                  </div>
-                ) : (
-                  <StreakButton
-                    key={"btn" + streak.id}
-                    onClick={() => handleProgress(streak)}
-                    disabled={streak.disabled}
-                  >
-                    Feito
-                  </StreakButton>
-                )}
+                <div className="streak-under-div">
+                  {btnLoading ? (
+                    <div style={{ margin: "5px 0" }}>
+                      <BtnLoader />
+                    </div>
+                  ) : (
+                    <StreakButton
+                      key={"btn" + streak.id}
+                      onClick={() => handleProgress(streak)}
+                      disabled={streak.disabled}
+                    >
+                      Feito
+                    </StreakButton>
+                  )}
+                  {streak.last && (<div className="last-update"><i className="bi bi-arrow-repeat me-2" style={{color: 'coral'}}/> {formatDate(streak)} - {formatHour(streak)}</div>)}
+                </div>
               </div>
             ))}
           <Pagination

@@ -54,6 +54,11 @@ const TodoComponent = styled.div<AnimateProps>`
     width: 700px;
     padding: 5px 25px;
   }
+
+  & .date-span {
+    font-weight: 300;
+    font-size: 13px;
+  }
 `;
 
 type Props = {
@@ -100,13 +105,24 @@ const Todo = ({ item }: Props) => {
       });
   };
 
+  const formatDate = (todo: TodoType): string => {
+    if (todo.createdAt !== null) {
+      let aux = todo.createdAt;
+      let ix = aux.indexOf("T");
+      let date = aux.substring(0, ix);
+      let fields = date.split("-");
+      return fields[2]+"/"+fields[1]+"/"+fields[0];
+    }
+    return "null";
+  };
+
   return (
     <TodoComponent animate={toggle}>
       <div className="form-check">
         <div className="ribbon ribbon-top-right">
           <span className={item.priority + "-ribbon"}>&nbsp;</span>
         </div>
-        <label htmlFor={item.id.toString()}>{item.title}</label>
+        <label htmlFor={item.id.toString()}>{item.title}<span className="date-span"> - {formatDate(item)}</span></label>
         <input
           type="checkbox"
           className="form-check-input"

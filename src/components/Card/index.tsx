@@ -31,6 +31,11 @@ const MainCard = styled.div`
   @media (min-width: 768px) {
     width: 650px;
   }
+
+  & .date-span {
+    font-weight: 300;
+    font-size: 13px;
+  }
 `;
 
 const CardTitulo = styled.div`
@@ -85,12 +90,26 @@ const Card = ({ cd }: Props) => {
     }
   };
 
+  const formatDate = (card: CardType): string => {
+    if (card.createdAt !== null) {
+      let aux = card.createdAt;
+      let ix = aux.indexOf("T");
+      let date = aux.substring(0, ix);
+      let fields = date.split("-");
+      return fields[2]+"/"+fields[1]+"/"+fields[0];
+    }
+    return "null";
+  };
+
   return (
     <MainCard>
-      <div className="d-flex flex-row-reverse align-items-center justify-content-between up-title">
+      <div className="d-flex flex-row-reverse align-items-center justify-content-between up-title mb-1">
         <button onClick={handleDeletion} className="up-title-button">
           <i className="bi bi-trash3" style={{color: "indianred"}} />
         </button>
+        <label htmlFor={"card-" + cd.id}>
+          {cd.createdAt && <span className="date-span">{formatDate(cd)}</span>}
+        </label>
         <Link to={`/cards/${cd.id}`} className="up-title-button">
           <i className="bi bi-pencil-fill" style={{color: "gold"}} />
         </Link>

@@ -12,7 +12,7 @@ type Props = {
 
 const ProgressCard = styled.div`
   width: 280px;
-  min-height: 120px;
+  min-height: 135px;
   background-color: ${theme.cardColor};
   border-radius: 4px;
 
@@ -116,14 +116,15 @@ const ProgressBar = ({ streak }: Props) => {
         <progress
           id={"progress-streak-" + streak.id}
           value={streak.count}
-          max={streak.total}
+          max={streak.totalPerLabel}
         />
         <div className="mt-2 d-flex justify-content-center">
-          <span>{((streak.count / streak.total) * 100).toFixed(2)}%</span>
+          <span>{((streak.count / streak.totalPerLabel) * 100).toFixed(2)}%</span>
           <span className="ms-1">
-            ({streak.count}/{streak.total} {streak.label}) 
+            ({streak.count}/{streak.totalPerLabel}) 
           </span>
         </div>
+        <span>{streak.total} {streak.label}</span>
       </div>
     </ProgressCard>
   );
