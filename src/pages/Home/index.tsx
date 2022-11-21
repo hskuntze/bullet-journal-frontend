@@ -4,7 +4,7 @@ import styled from "styled-components";
 import * as themeConf from "util/theme";
 import "./styles.css";
 
-const HomeContent = styled.main`
+const HomeContent = styled.div`
   background-color: ${themeConf.backgroundColor};
   display: flex;
   flex-direction: column;

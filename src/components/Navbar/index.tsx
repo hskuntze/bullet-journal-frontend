@@ -5,7 +5,7 @@ import styled from "styled-components";
 import "./styles.css";
 import "bootstrap/js/src/collapse.js";
 
-const NavbarComponent = styled.div`
+const NavbarComponent = styled.nav`
   background-color: ${themeConf.navbarBackgroundColor};
   color: ${themeConf.textColor};
   box-shadow: ${themeConf.navbarBoxshadowColor};
