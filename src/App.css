@@ -9,6 +9,14 @@
 
 html {
   min-height: 100vh;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Definição para o Safari */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 h1,
