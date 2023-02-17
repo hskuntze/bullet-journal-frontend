@@ -84,15 +84,17 @@ const Todo = ({ item }: Props) => {
     item.done = item.done ? false : true;
     player();
 
-    const updateStreakParams: AxiosRequestConfig = {
-      method: "PUT",
-      withCredentials: true,
-      url: `/streaks/updateCount/${item.streak.id}`,
-    };
+    if (item.streak !== null) {
+      const updateStreakParams: AxiosRequestConfig = {
+        method: "PUT",
+        withCredentials: true,
+        url: `/streaks/updateCount/${item.streak.id}`,
+      };
 
-    requestBackend(updateStreakParams)
-      .then(() => {})
-      .catch(() => {});
+      requestBackend(updateStreakParams)
+        .then(() => {})
+        .catch(() => {});
+    }
 
     const params: AxiosRequestConfig = {
       method: "DELETE",
