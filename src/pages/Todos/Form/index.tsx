@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { requestBackend } from "util/requests";
-import { TodoType } from "types/TodoType";
+import { StreakMinType, TodoType } from "types/TodoType";
 import { useEffect, useState } from "react";
 import { PriorityType } from "types/PriorityType";
 import styled from "styled-components";
@@ -191,8 +191,8 @@ const Form = () => {
                 options={streaks}
                 classNamePrefix="todo-select"
                 styles={selectStyles}
-                getOptionLabel={(val: StreakType) => val.title}
-                getOptionValue={(val: StreakType) => val.id.toString()}
+                getOptionLabel={(val: StreakMinType) => val.title}
+                getOptionValue={(val: StreakMinType) => val.id.toString()}
               />
             )}
           />

@@ -137,7 +137,11 @@ const Todo = ({ item }: Props) => {
             {item.title}
             <span className="date-span"> - {formatDate(item)}</span>
           </label>
-          <span className="text-muted">{item.streak.title}</span>
+          {item.streak !== null ? (
+            <span className="text-muted">{item.streak.title}</span>
+          ) : (
+            <></>
+          )}
         </div>
         <input
           type="checkbox"

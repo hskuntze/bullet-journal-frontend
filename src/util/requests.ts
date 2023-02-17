@@ -52,28 +52,3 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-// axios.interceptors.response.use(
-//   function (response) {
-//     //Qualquer status code entre os 2xx vai dar trigger nessa função
-//     return response;
-//   },
-//   function (error) {
-//     //Qualquer status code fora dos 2xx vai dar trigger nessa função
-//     switch(error.response.status){
-//       case 400:
-//         toast.error(error.response.error_description);
-//         break;
-//       case 401:
-//         localStorage.setItem("401", "Erro na aplicação, tente novamente mais tarde.");
-//         break;
-//       case 403:
-//         localStorage.setItem("403", "Você não possui a autorização necessária.");
-//         break;
-//       case 409:
-//         localStorage.setItem("409", "Nome e/ou email já existentes.");
-//         break;
-//     }
-//     return Promise.reject(error);
-//   }
-// );
