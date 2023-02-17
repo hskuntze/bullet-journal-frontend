@@ -1,4 +1,5 @@
 import { PriorityType } from "./PriorityType";
+import { StreakType } from "./StreakType";
 import { UserType } from "./UserType";
 
 export type TodoType = {
@@ -9,4 +10,5 @@ export type TodoType = {
     user: UserType;
     priorityAux: PriorityType[];
     priority: string;
+    streak: StreakType;
 }

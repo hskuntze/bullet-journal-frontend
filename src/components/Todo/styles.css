@@ -46,6 +46,19 @@
   transform: rotate(45deg);
 }
 
+.form-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 15px;
+}
+
+.form-check {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
 @media (min-width: 576px){
   .ribbon-top-right {
     left: 375px;

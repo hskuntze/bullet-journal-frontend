@@ -4,7 +4,7 @@ import { TodoType } from "types/TodoType";
 import { requestBackend } from "util/requests";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Howl} from "howler";
+import { Howl } from "howler";
 import CheckSound from "assets/audios/todo-done.mp3";
 import * as themes from "util/theme";
 import "./styles.css";
@@ -84,6 +84,16 @@ const Todo = ({ item }: Props) => {
     item.done = item.done ? false : true;
     player();
 
+    const updateStreakParams: AxiosRequestConfig = {
+      method: "PUT",
+      withCredentials: true,
+      url: `/streaks/updateCount/${item.streak.id}`,
+    };
+
+    requestBackend(updateStreakParams)
+      .then(() => {})
+      .catch(() => {});
+
     const params: AxiosRequestConfig = {
       method: "DELETE",
       withCredentials: true,
@@ -111,7 +121,7 @@ const Todo = ({ item }: Props) => {
       let ix = aux.indexOf("T");
       let date = aux.substring(0, ix);
       let fields = date.split("-");
-      return fields[2]+"/"+fields[1]+"/"+fields[0];
+      return fields[2] + "/" + fields[1] + "/" + fields[0];
     }
     return "null";
   };
@@ -122,7 +132,13 @@ const Todo = ({ item }: Props) => {
         <div className="ribbon ribbon-top-right">
           <span className={item.priority + "-ribbon"}>&nbsp;</span>
         </div>
-        <label htmlFor={item.id.toString()}>{item.title}<span className="date-span"> - {formatDate(item)}</span></label>
+        <div className="form-info">
+          <label htmlFor={item.id.toString()}>
+            {item.title}
+            <span className="date-span"> - {formatDate(item)}</span>
+          </label>
+          <span className="text-muted">{item.streak.title}</span>
+        </div>
         <input
           type="checkbox"
           className="form-check-input"

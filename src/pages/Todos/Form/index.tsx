@@ -10,6 +10,7 @@ import styled from "styled-components";
 import navigate from "util/navigate";
 import * as theme from "util/theme";
 import Select from "react-select";
+import { StreakType } from "types/StreakType";
 
 type UrlParams = {
   todoId: string;
@@ -55,6 +56,7 @@ const Form = () => {
     { priority: "medium" },
     { priority: "low" }
   ]);
+  const [streaks, setStreaks] = useState<StreakType[]>([]);
 
   const {
     register,
@@ -102,14 +104,30 @@ const Form = () => {
         let data = (await requestBackend(params)).data as TodoType;
         setValue("title", data.title);
         setValue("priority", data.priority);
+        setValue("streak", data.streak);
       })();
     }
-  }, [todoId, editing, setValue]);
+
+    if(streaks.length === 0) {
+      (async () => {
+        const params: AxiosRequestConfig = {
+          url: "/streaks",
+          method: "GET",
+          withCredentials: true
+        };
+
+        let data = (await requestBackend(params)).data.content;
+        setStreaks(data);
+      })();
+    }
+  }, [todoId, editing, setValue, streaks]);
 
   const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     navigate.replace("/to-dos");
   };
+
+  console.log(streaks);
 
   const formatPriority = (priority: string): string => {
     if (priority === "high") {
@@ -157,6 +175,24 @@ const Form = () => {
                   formatPriority(val.priority)
                 }
                 getOptionValue={(val: PriorityType) => val.priority}
+              />
+            )}
+          />
+        </div>
+        <div className="mt-2 mb-3 my-sm-4">
+          <Controller
+            name="streak"
+            rules={{ required: false }}
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder="Streak"
+                options={streaks}
+                classNamePrefix="todo-select"
+                styles={selectStyles}
+                getOptionLabel={(val: StreakType) => val.title}
+                getOptionValue={(val: StreakType) => val.id.toString()}
               />
             )}
           />

@@ -12,6 +12,7 @@ import ContentLoader from "components/ContentLoader";
 import Todo from "components/Todo";
 import styled from "styled-components";
 import * as theme from "util/theme";
+import { log } from "console";
 
 const TodoButton = styled.div`
   width: 90px;
